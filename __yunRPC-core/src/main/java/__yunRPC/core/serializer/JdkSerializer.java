@@ -1,4 +1,4 @@
-package __yunRPC.common.serializer;
+package __yunRPC.core.serializer;
 
 import java.io.*;
 

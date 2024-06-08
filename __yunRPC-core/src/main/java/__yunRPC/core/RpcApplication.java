@@ -1,8 +1,10 @@
 package __yunRPC.core;
 
-import __yunRPC.common.model.RpcRequest;
+import __yunRPC.core.config.RegistryConfig;
 import __yunRPC.core.config.RpcConfig;
 import __yunRPC.core.constant.RpcConstant;
+import __yunRPC.core.factory.RegistryFactory;
+import __yunRPC.core.registry.Registry;
 import __yunRPC.core.service.Impl.NettyHttpServer;
 import __yunRPC.core.service.HttpServer;
 import __yunRPC.core.util.ConfigUtils;
@@ -21,6 +23,10 @@ public class RpcApplication {
     public static void init(RpcConfig newRpcConfig){
         rpcConfig = newRpcConfig;
         log.info("rpc init,config = {}",newRpcConfig.toString());
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("registry init,config = {}",registryConfig);
     }
     public static void init(){
         RpcConfig newRpcConfig;

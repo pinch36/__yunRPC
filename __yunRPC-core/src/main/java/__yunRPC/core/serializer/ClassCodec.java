@@ -1,4 +1,4 @@
-package __yunRPC.common.serializer;
+package __yunRPC.core.serializer;
 
 import com.google.gson.*;
 import com.google.gson.JsonSerializer;

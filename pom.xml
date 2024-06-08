@@ -13,7 +13,6 @@
     <module>__yunRPC-common</module>
     <module>__yunRPC-consumer</module>
     <module>__yunRPC-provider</module>
-    <module>__yunRPC-server</module>
     <module>__yunRPC-core</module>
   </modules>
 
@@ -30,7 +29,7 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
+      <version>1.3.12</version>
     </dependency>
     <dependency>
       <groupId>cn.hutool</groupId>

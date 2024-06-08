@@ -1,8 +1,9 @@
 package __yunRPC.core.handler.netty;
 
-import __yunRPC.common.model.RpcRequest;
-import __yunRPC.common.model.User;
-import __yunRPC.common.serializer.ClassCodec;
+import __yunRPC.core.model.RpcRequest;
+import __yunRPC.core.serializer.ClassCodec;
+import __yunRPC.core.serializer.JdkSerializer;
+import __yunRPC.core.serializer.JsonSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.netty.buffer.ByteBuf;
@@ -30,15 +31,11 @@ public class RequestToJsonHandler extends SimpleChannelInboundHandler<FullHttpRe
         ByteBuf content = fullHttpRequest.content();
         byte[] reqContent = new byte[content.readableBytes()];
         content.readBytes(reqContent);
-        log.info("-------{}", User.class.getName());
-        String strContent = null;
-        strContent = new String(reqContent, StandardCharsets.UTF_8);
+        String strContent = new String(reqContent, StandardCharsets.UTF_8);
         RpcRequest rpcRequest = null;
-        Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassCodec()).create();
+        Gson gson = JsonSerializer.getGson();
         try {
-//            Gson gson = new Gson();
             rpcRequest = gson.fromJson(strContent,RpcRequest.class);
-//            rpcRequest = JSONUtil.toBean(strContent, RpcRequest.class);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

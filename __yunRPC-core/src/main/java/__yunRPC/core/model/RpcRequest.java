@@ -1,5 +1,6 @@
-package __yunRPC.common.model;
+package __yunRPC.core.model;
 
+import __yunRPC.core.constant.RpcConstant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +24,5 @@ public class RpcRequest implements Serializable {
     private String methodName;
     private Class<?>[] parameterTypes;
     private Object[] args;
-
+    private String serviceVersion = RpcConstant.DEFAULT_SERVICE_VERSION;
 }

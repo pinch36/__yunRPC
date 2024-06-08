@@ -1,9 +1,10 @@
 package __yunRPC.core.handler.netty;
 
-import __yunRPC.common.model.RpcRequest;
-import __yunRPC.common.model.RpcResponse;
-import __yunRPC.common.serializer.ClassCodec;
+import __yunRPC.core.model.RpcRequest;
+import __yunRPC.core.model.RpcResponse;
+import __yunRPC.core.serializer.ClassCodec;
 import __yunRPC.core.registry.LocalRegistry;
+import __yunRPC.core.serializer.JsonSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.netty.buffer.ByteBuf;
@@ -28,7 +29,7 @@ public class RpcHttpServerHandler extends SimpleChannelInboundHandler<RpcRequest
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcRequest rpcRequest) throws Exception {
         //调用目标方法,得到结果
         RpcResponse rpcResponse = RpcResponse.builder().build();
-        Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassCodec()).create();
+        Gson gson = JsonSerializer.getGson();
         try {
             String serviceName = rpcRequest.getServiceName();
             String methodName = rpcRequest.getMethodName();
@@ -39,9 +40,6 @@ public class RpcHttpServerHandler extends SimpleChannelInboundHandler<RpcRequest
             for (int i = 0; i < args.length; i++) {
                 args[i] = gson.fromJson(gson.toJson(args[i]),parameterTypes[i]);
             }
-//            LinkedTreeMap treeMap = (LinkedTreeMap) args[0];
-//            User user = new User();
-//            user.setName((String) treeMap.get("name"));
             Object invoke = method.invoke(aClass.getConstructor().newInstance(), args);
             log.info("请求返回数据{}", invoke);
             //返回
@@ -53,7 +51,6 @@ public class RpcHttpServerHandler extends SimpleChannelInboundHandler<RpcRequest
             rpcResponse.setMessage(e.getMessage());
             throw new RuntimeException(e);
         }
-//        String jsonStr = JSONUtil.toJsonStr(rpcResponse);
         //返回结果,发送请求
         doResponse(channelHandlerContext, gson, rpcResponse);
     }

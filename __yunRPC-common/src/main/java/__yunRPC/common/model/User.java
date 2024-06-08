@@ -1,6 +1,5 @@
 package __yunRPC.common.model;
 
-import __yunRPC.common.serializer.Serializer;
 import lombok.Data;
 
 import java.io.Serializable;

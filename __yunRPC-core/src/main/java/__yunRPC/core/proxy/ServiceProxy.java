@@ -1,9 +1,16 @@
 package __yunRPC.core.proxy;
 
-import __yunRPC.common.model.RpcRequest;
-import __yunRPC.common.model.RpcResponse;
-import __yunRPC.common.serializer.ClassCodec;
-import __yunRPC.common.serializer.JdkSerializer;
+import __yunRPC.core.RpcApplication;
+import __yunRPC.core.config.RpcConfig;
+import __yunRPC.core.constant.RpcConstant;
+import __yunRPC.core.factory.RegistryFactory;
+import __yunRPC.core.model.RpcRequest;
+import __yunRPC.core.model.RpcResponse;
+import __yunRPC.core.model.ServiceMetaInfo;
+import __yunRPC.core.registry.Registry;
+import __yunRPC.core.serializer.ClassCodec;
+import __yunRPC.core.serializer.JsonSerializer;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.google.gson.Gson;
@@ -11,6 +18,7 @@ import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,25 +30,32 @@ import java.lang.reflect.Method;
 public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        JdkSerializer serializer = new JdkSerializer();
+        //生成请求
+        String serviceName = method.getDeclaringClass().getName();
         RpcRequest rpcRequest = RpcRequest.builder()
                 .methodName(method.getName())
                 .parameterTypes(method.getParameterTypes())
-                .serviceName(method.getDeclaringClass().getName())
+                .serviceName(serviceName)
                 .args(args)
                 .build();
-        Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassCodec()).create();
+        Gson gson = JsonSerializer.getGson();
         String jsonStr = gson.toJson(rpcRequest);
-//        String jsonStr = JSONUtil.toJsonStr(build);
-
-        //            byte[] bodyBytes = serializer.serialize(rpcRequest);
-        try (HttpResponse response = HttpRequest.post("http://localhost:8090")
-//                    .body(bodyBytes)
+        //获取服务地址
+        RpcConfig rpcConfig = RpcApplication.getRpcConfig();
+        Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
+        ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
+        serviceMetaInfo.setServiceName(serviceName);
+        serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
+        List<ServiceMetaInfo> serviceMetaInfos = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
+        if (CollUtil.isEmpty(serviceMetaInfos)) {
+            throw new RuntimeException("暂无服务地址");
+        }
+        ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfos.get(0);
+        //发送请求
+        try (HttpResponse response = HttpRequest.post(selectedServiceMetaInfo.getServiceAddress())
                 .body(jsonStr)
                 .execute()) {
             String result = response.body();
-//            String json = new String(bytes, StandardCharsets.UTF_8);
-//                RpcResponse rpcResponse = serializer.deSerialize(result, RpcResponse.class);
             RpcResponse rpcResponse = gson.fromJson(result, RpcResponse.class);
             Object data = rpcResponse.getData();
             data = gson.fromJson(gson.toJson(data),rpcResponse.getDataType());

@@ -16,4 +16,5 @@ public class RpcConfig {
     private String serverHost = "localhost";
     private Integer serverPort = 8090;
     private boolean mock = false;
+    private RegistryConfig registryConfig = new RegistryConfig();
 }

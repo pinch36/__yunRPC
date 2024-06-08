@@ -1,4 +1,4 @@
-package __yunRPC.common.model;
+package __yunRPC.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
