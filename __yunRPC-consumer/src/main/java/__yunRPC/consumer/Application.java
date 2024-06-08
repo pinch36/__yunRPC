@@ -2,7 +2,7 @@ package __yunRPC.consumer;
 
 import __yunRPC.common.model.User;
 import __yunRPC.common.service.UserService;
-import __yunRPC.consumer.factory.ServiceFactory;
+import __yunRPC.core.factory.ServiceFactory;
 
 /**
  * Created with IntelliJ IDEA.

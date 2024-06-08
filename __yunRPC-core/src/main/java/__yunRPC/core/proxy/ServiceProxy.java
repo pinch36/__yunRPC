@@ -1,4 +1,4 @@
-package __yunRPC.consumer.Proxy;
+package __yunRPC.core.proxy;
 
 import __yunRPC.common.model.RpcRequest;
 import __yunRPC.common.model.RpcResponse;
