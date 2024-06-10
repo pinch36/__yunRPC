@@ -17,6 +17,8 @@ public class Application {
         User user = new User();
         user.setName("__yun");
         user = userService.getUser(user);
+        user = userService.getUser(user);
+        user = userService.getUser(user);
         if (user != null){
             System.out.println("用户名："+user.getName());
         }else{

@@ -37,4 +37,14 @@ public class RedisRegistry implements Registry{
     public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) {
         return null;
     }
+
+    @Override
+    public void heartBeat() {
+
+    }
+
+    @Override
+    public void watch(String serviceNodeKey) {
+
+    }
 }

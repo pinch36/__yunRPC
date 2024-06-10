@@ -2,8 +2,6 @@ package __yunRPC.core.util;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.dialect.Props;
-import io.netty.util.internal.StringUtil;
-
 /**
  * Created with IntelliJ IDEA.
  *

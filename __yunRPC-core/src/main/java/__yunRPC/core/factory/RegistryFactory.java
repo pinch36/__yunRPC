@@ -2,7 +2,6 @@ package __yunRPC.core.factory;
 
 import __yunRPC.core.registry.EtcdRegistry;
 import __yunRPC.core.registry.Registry;
-import __yunRPC.core.registry.RegistryKeys;
 import __yunRPC.core.spi.SpiLoader;
 
 /**

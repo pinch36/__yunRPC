@@ -1,9 +1,6 @@
 package __yunRPC.core.config;
 
 import lombok.Data;
-
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  *

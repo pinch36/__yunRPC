@@ -22,4 +22,6 @@ public interface Registry {
     void unRegister(ServiceMetaInfo serviceMetaInfo);
     void destroy();
     List<ServiceMetaInfo> serviceDiscovery(String serviceKey);
+    void heartBeat();
+    void watch(String serviceNodeKey);
 }

@@ -2,9 +2,6 @@ package __yunRPC.core.model;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-
-import java.sql.Struct;
-
 /**
  * Created with IntelliJ IDEA.
  *
