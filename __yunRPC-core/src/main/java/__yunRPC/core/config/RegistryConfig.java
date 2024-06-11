@@ -13,12 +13,13 @@ public class RegistryConfig {
     /**
      * 注册中心类别
      */
-    private String registry = "etcd";
+    private String registry = "redis";
     /**
      * 注册中心地址
      */
     private String address = "http://localhost:2380";
     private String username;
-    private String password;
+    private String password = "123456";
     private Long timeout = 10000L;
+
 }

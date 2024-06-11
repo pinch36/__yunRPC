@@ -13,21 +13,20 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  *
  * @Author: __yun
- * @Date: 2024/06/08/18:25
+ * @Date: 2024/06/10/15:12
  * @Description:
  */
-public class RegistryTest {
-    final Registry registry = new EtcdRegistry();
-
+public class RedisRegistryTest{
+    final Registry registry = new RedisRegistry();
     @Before
-    public void init() {
+    public void init(){
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress("http://localhost:2379");
+        registryConfig.setAddress("http://localhost:6379");
+        registryConfig.setRegistry("redis");
         registry.init(registryConfig);
     }
-
     @Test
-    public void register() throws Exception {
+    public void register()throws Exception{
         ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
         serviceMetaInfo.setServiceName("myService");
         serviceMetaInfo.setServiceVersion("1.0");
@@ -47,9 +46,8 @@ public class RegistryTest {
         serviceMetaInfo.setServicePort(1234);
         registry.register(serviceMetaInfo);
     }
-
     @Test
-    public void unRegistry() {
+    public void unRegistry(){
         ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
         serviceMetaInfo.setServiceName("myService");
         serviceMetaInfo.setServiceVersion("1.0");
@@ -57,21 +55,27 @@ public class RegistryTest {
         serviceMetaInfo.setServicePort(1234);
         registry.unRegister(serviceMetaInfo);
     }
-
     @Test
-    public void serviceDiscovery() {
+    public void serviceDiscovery(){
         ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
         serviceMetaInfo.setServiceName("myService");
         serviceMetaInfo.setServiceVersion("1.0");
         String serviceKey = serviceMetaInfo.getServiceKey();
         List<ServiceMetaInfo> serviceMetaInfos = registry.serviceDiscovery(serviceKey);
         Assert.assertNotNull(serviceMetaInfos);
-        System.out.println(serviceMetaInfos.size());
     }
-
     @Test
     public void heartBeat() throws Exception {
         register();
-        Thread.sleep(60 * 1000L);
+        Thread.sleep(60*1000L);
+    }
+
+    @Test
+    public void watch() throws Exception {
+        register();
+        serviceDiscovery();
+        unRegistry();
+        Thread.sleep(5*1000L);
+        Thread.sleep(20*1000L);
     }
 }

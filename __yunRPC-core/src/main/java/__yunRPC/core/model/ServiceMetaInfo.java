@@ -31,7 +31,7 @@ public class ServiceMetaInfo {
      * @return
      */
     public String getServiceNodeKey(){
-        return String.format("%s/%s:%s",getServiceKey(),serviceHost,servicePort);
+        return String.format("%s:%s:%s",getServiceKey(),serviceHost,servicePort);
     }
     public String getServiceAddress(){
         if (!StrUtil.contains(serviceHost,"http")){
