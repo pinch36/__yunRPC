@@ -1,0 +1,2 @@
+json=__yunRPC.core.serializer.JsonSerializer
+jdk=__yunRPC.core.serializer.JdkSerializer

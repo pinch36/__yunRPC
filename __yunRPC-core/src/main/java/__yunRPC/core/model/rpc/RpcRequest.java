@@ -1,4 +1,4 @@
-package __yunRPC.core.model;
+package __yunRPC.core.model.rpc;
 
 import __yunRPC.core.constant.RpcConstant;
 import lombok.AllArgsConstructor;

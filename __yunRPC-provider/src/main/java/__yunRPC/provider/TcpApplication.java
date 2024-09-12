@@ -6,11 +6,11 @@ import __yunRPC.core.config.RegistryConfig;
 import __yunRPC.core.config.RpcConfig;
 import __yunRPC.core.constant.RpcConstant;
 import __yunRPC.core.factory.RegistryFactory;
-import __yunRPC.core.model.ServiceMetaInfo;
+import __yunRPC.core.model.service.ServiceMetaInfo;
 import __yunRPC.core.registry.LocalRegistry;
 import __yunRPC.core.registry.Registry;
-import __yunRPC.core.service.HttpServer;
-import __yunRPC.core.service.Impl.NettyHttpServer;
+import __yunRPC.core.service.Impl.NettyTcpServer;
+import __yunRPC.core.service.TcpServer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,7 +19,7 @@ import __yunRPC.core.service.Impl.NettyHttpServer;
  * @Date: 2024/06/06/16:38
  * @Description:
  */
-public class Application {
+public class TcpApplication {
     public static void main(String[] args) {
         RpcApplication.init();
         RpcConfig rpcConfig = RpcApplication.getRpcConfig();
@@ -37,7 +37,7 @@ public class Application {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        HttpServer httpServer = new NettyHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+        TcpServer tcpServer = new NettyTcpServer();
+        tcpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
     }
 }

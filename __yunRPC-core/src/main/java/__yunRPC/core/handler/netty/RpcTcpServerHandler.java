@@ -1,5 +1,6 @@
 package __yunRPC.core.handler.netty;
 
+import __yunRPC.core.model.protocol.ProtocolMessage;
 import __yunRPC.core.model.rpc.RpcRequest;
 import __yunRPC.core.model.rpc.RpcResponse;
 import __yunRPC.core.registry.LocalRegistry;
@@ -8,9 +9,13 @@ import com.google.gson.Gson;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Method;
 
 /**
@@ -21,7 +26,7 @@ import java.lang.reflect.Method;
  * @Description:
  */
 @Slf4j
-public class RpcHttpServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
+public class RpcTcpServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcRequest rpcRequest) throws Exception {
@@ -50,17 +55,8 @@ public class RpcHttpServerHandler extends SimpleChannelInboundHandler<RpcRequest
             throw new RuntimeException(e);
         }
         //返回结果,发送请求
-        doResponse(channelHandlerContext, gson, rpcResponse);
+        ProtocolMessage<RpcResponse> protocolMessage = ProtocolMessage.getRpcResponseProtocolMessage(rpcResponse);
+        channelHandlerContext.writeAndFlush(protocolMessage);
     }
 
-    private static void doResponse(ChannelHandlerContext channelHandlerContext, Gson gson, RpcResponse rpcResponse) {
-        String json = gson.toJson(rpcResponse);
-        ByteBuf buffer = channelHandlerContext.alloc().buffer();
-        buffer.writeBytes(json.getBytes(CharsetUtil.UTF_8));
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
-                HttpResponseStatus.OK, buffer);
-        response.headers().set("Content-Type", "application/json;charset=UTF-8");
-        response.headers().set("Content-Length", response.content().readableBytes());
-        channelHandlerContext.writeAndFlush(response);
-    }
 }

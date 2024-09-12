@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +14,7 @@ import java.io.IOException;
  * @Description:
  */
 public class JsonSerializer implements Serializer{
- private static volatile Gson gson;
+ private static volatile Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassCodec()).create();
     public static Gson getGson(){
         if (gson == null){
             synchronized (Gson.class){
@@ -27,12 +28,14 @@ public class JsonSerializer implements Serializer{
 
     @Override
     public <T> byte[] serialize(T object) throws IOException {
-//        Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassCodec()).create();
-        return null;
+        String json = gson.toJson(object);
+        return json.getBytes();
     }
 
     @Override
     public <T> T deSerialize(byte[] bytes, Class<T> type) throws IOException {
-        return null;
+        String s = new String(bytes, StandardCharsets.UTF_8);
+        T object = gson.fromJson(s, type);
+        return object;
     }
 }

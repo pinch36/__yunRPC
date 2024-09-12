@@ -1,6 +1,6 @@
 package __yunRPC.core.handler.netty;
 
-import __yunRPC.core.model.RpcRequest;
+import __yunRPC.core.model.rpc.RpcRequest;
 import __yunRPC.core.serializer.JsonSerializer;
 import com.google.gson.Gson;
 import io.netty.buffer.ByteBuf;

@@ -15,6 +15,7 @@ public class RpcConfig {
     private String version = "1.0";
     private String serverHost = "localhost";
     private Integer serverPort = 8090;
+    private String serializer = "json";
     private boolean mock = false;
     private RegistryConfig registryConfig = new RegistryConfig();
 }

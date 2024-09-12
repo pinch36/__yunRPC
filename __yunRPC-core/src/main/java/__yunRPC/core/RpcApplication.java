@@ -7,6 +7,8 @@ import __yunRPC.core.factory.RegistryFactory;
 import __yunRPC.core.registry.Registry;
 import __yunRPC.core.service.Impl.NettyHttpServer;
 import __yunRPC.core.service.HttpServer;
+import __yunRPC.core.service.Impl.NettyTcpServer;
+import __yunRPC.core.service.TcpServer;
 import __yunRPC.core.util.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,5 +54,7 @@ public class RpcApplication {
     public static void main(String[] args) {
         HttpServer httpServer = new NettyHttpServer();
         httpServer.doStart(8090);
+//        TcpServer nettyTcpServer = new NettyTcpServer();
+//        nettyTcpServer.doStart(8090);
     }
 }

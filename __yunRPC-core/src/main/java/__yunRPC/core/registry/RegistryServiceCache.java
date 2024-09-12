@@ -1,6 +1,6 @@
 package __yunRPC.core.registry;
 
-import __yunRPC.core.model.ServiceMetaInfo;
+import __yunRPC.core.model.service.ServiceMetaInfo;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,7 +1,7 @@
 package __yunRPC.core.registry;
 
 import __yunRPC.core.config.RegistryConfig;
-import __yunRPC.core.model.ServiceMetaInfo;
+import __yunRPC.core.model.service.ServiceMetaInfo;
 import __yunRPC.core.redis.JedisDBPool;
 import __yunRPC.core.redis.RedisQuery;
 import __yunRPC.core.serializer.JsonSerializer;

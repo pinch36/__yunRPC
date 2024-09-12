@@ -13,7 +13,7 @@ public class RegistryConfig {
     /**
      * 注册中心类别
      */
-    private String registry = "redis";
+    private String registry = "etcd";
     /**
      * 注册中心地址
      */

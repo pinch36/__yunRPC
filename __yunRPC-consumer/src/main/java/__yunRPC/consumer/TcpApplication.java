@@ -11,9 +11,9 @@ import __yunRPC.core.factory.ServiceFactory;
  * @Date: 2024/06/06/16:38
  * @Description:
  */
-public class Application {
+public class TcpApplication {
     public static void main(String[] args) {
-        UserService userService = ServiceFactory.getProxy(UserService.class);
+        UserService userService = ServiceFactory.getTcpProxy(UserService.class);
         User user = new User();
         user.setName("__yun");
         user = userService.getUser(user);
