@@ -4,6 +4,8 @@ import __yunRPC.core.RpcApplication;
 import __yunRPC.core.config.RpcConfig;
 import __yunRPC.core.constant.RpcConstant;
 import __yunRPC.core.factory.RegistryFactory;
+import __yunRPC.core.loadbalancer.LoadBalancer;
+import __yunRPC.core.loadbalancer.impl.RoundRobinLoadBalancer;
 import __yunRPC.core.model.protocol.ProtocolMessage;
 import __yunRPC.core.model.rpc.RpcRequest;
 import __yunRPC.core.model.rpc.RpcResponse;
@@ -51,7 +53,9 @@ public class ConnectUtils {
         if (CollUtil.isEmpty(serviceMetaInfos)) {
             throw new RuntimeException("暂无服务地址");
         }
-        ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfos.get(0);
+        //TODO 优化负载均衡器内存
+        LoadBalancer loadBalancer = new RoundRobinLoadBalancer();
+        ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(null,serviceMetaInfos);
         NioEventLoopGroup group = group = new NioEventLoopGroup();
         CountDownLatch latch = new CountDownLatch(1);
         try {

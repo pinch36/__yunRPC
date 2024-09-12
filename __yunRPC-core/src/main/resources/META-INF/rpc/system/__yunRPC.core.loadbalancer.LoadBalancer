@@ -1,0 +1,3 @@
+roundRobin=__yunRPC.core.loadbalancer.impl.RoundRobinLoadBalancer
+random=__yunRPC.core.loadbalancer.impl.RandomLoadBalancer
+consistentHash=__yunRPC.core.loadbalancer.impl.ConsistentHashLoadBalancer

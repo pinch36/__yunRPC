@@ -1,5 +1,7 @@
 package __yunRPC.core.config;
 
+import __yunRPC.core.loadbalancer.LoadBalancerKeys;
+import __yunRPC.core.serializer.SerializerKeys;
 import lombok.Data;
 
 /**
@@ -15,7 +17,8 @@ public class RpcConfig {
     private String version = "1.0";
     private String serverHost = "localhost";
     private Integer serverPort = 8090;
-    private String serializer = "json";
+    private String serializer = SerializerKeys.JSON;
+    private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
     private boolean mock = false;
     private RegistryConfig registryConfig = new RegistryConfig();
 }

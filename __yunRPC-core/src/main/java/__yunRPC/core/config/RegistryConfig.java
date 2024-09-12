@@ -1,5 +1,6 @@
 package __yunRPC.core.config;
 
+import __yunRPC.core.registry.RegistryKeys;
 import lombok.Data;
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +14,7 @@ public class RegistryConfig {
     /**
      * 注册中心类别
      */
-    private String registry = "etcd";
+    private String registry = RegistryKeys.ETCD;
     /**
      * 注册中心地址
      */
