@@ -2,7 +2,7 @@ package __yunRPC.consumer;
 
 import __yunRPC.common.model.User;
 import __yunRPC.common.service.UserService;
-import __yunRPC.core.factory.ServiceFactory;
+import __yunRPC.core.factory.ServiceProxyFactory;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +13,7 @@ import __yunRPC.core.factory.ServiceFactory;
  */
 public class TcpApplication {
     public static void main(String[] args) {
-        UserService userService = ServiceFactory.getTcpProxy(UserService.class);
+        UserService userService = ServiceProxyFactory.getTcpProxy(UserService.class);
         User user = new User();
         user.setName("__yun");
         user = userService.getUser(user);

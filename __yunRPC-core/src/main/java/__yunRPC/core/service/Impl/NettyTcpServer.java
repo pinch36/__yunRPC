@@ -43,6 +43,7 @@ public class NettyTcpServer implements TcpServer {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
+            log.info("服务器关闭..");
             worker.shutdownGracefully();
             boss.shutdownGracefully();
         }

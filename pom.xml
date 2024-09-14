@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.example</groupId>
+  <groupId>com.__yun</groupId>
   <artifactId>__yunRPC</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -11,9 +11,10 @@
   <url>http://maven.apache.org</url>
   <modules>
     <module>__yunRPC-common</module>
-    <module>__yunRPC-consumer</module>
-    <module>__yunRPC-provider</module>
     <module>__yunRPC-core</module>
+    <module>__yunRPC-spring-boot-starter</module>
+    <module>__yunRPC-springboot-consumer</module>
+    <module>__yunRPC-springboot-provider</module>
   </modules>
 
   <properties>

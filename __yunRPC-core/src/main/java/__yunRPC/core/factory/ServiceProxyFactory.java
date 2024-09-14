@@ -14,7 +14,7 @@ import java.lang.reflect.Proxy;
  * @Date: 2024/06/06/21:04
  * @Description:
  */
-public class ServiceFactory {
+public class ServiceProxyFactory {
     public static <T> T getTcpProxy(Class<T> serviceClass) {
         if (RpcApplication.getRpcConfig().isMock()){
             return getMockProxy(serviceClass);
